@@ -2,63 +2,49 @@
 
 // console.dir();  -> displays more of an object style. There's a bunch of console.X(); it's a way of showing -> 아마 MDN 보고서 다른 거 쓰고 싶을거야
 
+//using _underscore_ for variable names
+//using camelCase for function names
+//because they are fucking confusing although VS assigns different colors 
+
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
 
-const coord_value = {
-    left_top_x: 0,
-    left_top_y: 0,
-    left_bottom_x: 0,
-    left_bottom_y: canvas.height,
-    right_top_x: canvas.width,
-    right_top_y: 0,
-    rigth_bottom_x: canvas.width,
-    rigth_bottom_y: canvas.height,
-    buffer_player: 20,
-};
+// coordinate values
+var left_top_x = 0;
+var left_top_y = 0;
+var left_bottom_x = 0;
+var left_bottom_y = canvas.height;
+var right_top_x = canvas.width;
+var right_top_y = 0;
+var rigth_bottom_x = canvas.width;
+var rigth_bottom_y = canvas.height;
+var buffer_player = 20;
 
-let playerSpeed = 5;
+// other values
+var player_speed = 5;
 
-//player
-const playerBeginCoord = {
-    radius: 20,
-    playerX: coord_value.left_bottom_x + coord_value.buffer_player + 20,
-    playerY: coord_value.left_bottom_y - coord_value.buffer_player - 20,
-};
+//player's beginning coordinate HALF CIRCLE
+var player_radius = 30;
+var player_x = left_bottom_x + buffer_player + player_radius;
+var player_y = left_bottom_y - buffer_player - player_radius;
 
-const playerPath = (x, y) => {
-    let path = new Path2D();
-    path.arc(x, y, playerBeginCoord.radius, 0, 2 * Math.PI);
-    return path;
-}
+//no I'm fucking ditching playerPath (and going with the drawPlayer)
 
-const player = {
-    path: playerPath(playerBeginCoord.playerX, playerBeginCoord.playerY),
-    fillStyle: "#b2aba9", //ash grey
-    strokeStyle: "white",
-};
-
-const drawPlayer = () => {
+const drawPlayer = (x, y) => {
     ctx.beginPath();
-
-    if (player.fillStyle != undefined) {
-        ctx.fillStyle = player.fillStyle;
-        ctx.fill(player.path);
-    }
-
-    if (player.strokeStyle != undefined) {
-        ctx.strokeStyle = player.strokeStyle;
-        ctx.stroke(player.path);
-    }
-
-
+    ctx.arc(x, y, player_radius, 0, 1*Math.PI); //line is there, but invisible
+    ctx.closePath();
+    ctx.strokeStyle = "white";
+    ctx.stroke();
+    ctx.fillStyle = "#b2aba9"; //ash grey
+    ctx.fill();
 };
 
 const step = () => {
    // console.log("inside step");
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawPlayer();
+    drawPlayer(player_x, player_y);
     //drawObstacle();
 
     window.requestAnimationFrame(step); //when you are done wih ALL the other stuff, call yourself again: hence this line resides at the last within the function
@@ -68,20 +54,20 @@ const onKeyDown = (event) => {
     //console.log(event);
     let key = event.key;
     if (key === "ArrowUp"){       
-        playerBeginCoord.playerY += -1 * playerSpeed;
-        console.log("pressed up", playerBeginCoord.playerY);
+       player_y += -1 * player_speed;
+        console.log("pressed up", player_y);
        } //if 를 여러변 쌓으면 여러 키 동시에 누르는 행위 입력으로 가능
-    if (key === "ArrowDown"){
-        console.log("pressed down");
-        playerBeginCoord.playerY += 1 * playerSpeed;
+    if (key === "ArrowDown"){        
+        player_y += 1 * player_speed;
+        console.log("pressed down", player_y);
     }
-    if (key === "ArrowLeft"){
-        console.log("pressed left");
-        playerBeginCoord.playerX += -1 * playerSpeed;
+    if (key === "ArrowLeft"){        
+        player_x += -1 * player_speed;
+        console.log("pressed left", player_x);
     }
-    if (key === "ArrowRight"){
-        console.log("pressed right");
-        playerBeginCoord.playerX += 1 * playerSpeed;
+    if (key === "ArrowRight"){       
+        player_x += 1 * player_speed;
+        console.log("pressed right", player_x); 
     }
 };
 
@@ -89,7 +75,7 @@ document.addEventListener("keydown", onKeyDown);//keydown, keyup, keypress = dow
 
 window.requestAnimationFrame(step);
 
-
+ //try to make below work !
 
 //step(); //위에 거(requestBlaBla)는 준비 되면 run함, 컴 내에서 as fast as the RAM can handle
 
@@ -168,4 +154,4 @@ window.addEventListener("load", onResize);
 */
 
 //delete this later
-console.log(coord_value, playerBeginCoord.playerX, playerBeginCoord.playerY);
+console.log();
