@@ -28,7 +28,10 @@ var player_value = {
 var player_coord = {
     x: cv_coord.left_bottom_x + player_value.buffer + player_value.radius,
     y: cv_coord.left_bottom_y - player_value.buffer - player_value.radius,
+    left_x_limit: 0 + player_value.buffer + player_value.radius,
+    right_x_limit: canvas.width - player_value.buffer - player_value.radius,
 };
+console.log(player_coord.left_x_limit, player_coord.right_x_limit);
 
 // (parameters_rain) coordinate values
 var rain_value = {
@@ -55,6 +58,16 @@ const drawPlayer = (x, y) => {
     ctx.fill();
 };
 
+const drawRain = (x, y) => {
+    ctx.beginPath();
+    ctx.arc(x, y, rain_value.radius, 0, 2*Math.PI); //line is there, but invisible
+   // ctx.closePath();
+    ctx.strokeStyle = "white";
+    ctx.stroke();
+    ctx.fillStyle = "#a9dacb"; //pale blue
+    ctx.fill();
+};
+
 //drawPlayer(player_coord.x, player_coord.y);
 
 /*
@@ -78,17 +91,18 @@ const movePlayerRight = () => {
  const onKeyLeftDown = (event) => {
     //console.log(event);
     let key = event.key;    
-    if (key === "ArrowLeft"){        
+    if (key === "ArrowLeft" && player_coord.left_x_limit < player_coord.x && player_coord.x <= player_coord.right_x_limit ){      
         player_coord.x += -1 * player_value.speed;
         console.log("pressed left");
         console.log(player_coord.x);
     }    
 };
+
 //(player) add keyboard listeners - right key down
 const onKeyRightDown = (event) => {
     //console.log(event);
     let key = event.key;    
-    if (key === "ArrowRight"){       
+    if (key === "ArrowRight" && player_coord.left_x_limit <= player_coord.x && player_coord.x < player_coord.right_x_limit ){       
         player_coord.x += 1 * player_value.speed;
         console.log("pressed right"); 
         console.log(player_coord.x);
@@ -163,6 +177,7 @@ const step = () => {
      ctx.clearRect(0, 0, canvas.width, canvas.height);
      drawPlayer(player_coord.x, player_coord.y);
      //drawObstacle();
+     drawRain(rain_coord.x, rain_coord.y);
   
      window.requestAnimationFrame(step); //when you are done wih ALL the other stuff, call yourself again: hence this line resides at the last within the function
      //this function already holds the time interval in which the screen refreshes - it figures out by the computer 상태 
