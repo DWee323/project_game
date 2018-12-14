@@ -2,6 +2,11 @@
 html, body {
     margin: 0;
 }
+#score {
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: beige;
+}
 
 #canvas {
     /* border: 1px solid black; */ /* 이걸 없애야 스크롤바가 없어짐 > 이게 2px 차지하고 있었던거임 */

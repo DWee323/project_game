@@ -1,6 +1,8 @@
 //select canvas
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
+let score_counter = document.querySelector("#score-counter");
+score_counter.textContent = 0; //placeholder for now
 
 // [ PARAMETERS ]
 // (parameters_CANVAS) coordinate values
@@ -57,8 +59,8 @@ const drawPlayer = (x, y) => {
     ctx.fill();
 };
 
-
  //(player) add keyboard listeners - left key down
+ //(player) don't go outside left
  const onKeyLeftDown = (event) => {
     console.log(event);
     let key = event.key;    
@@ -70,6 +72,7 @@ const drawPlayer = (x, y) => {
 };
 
 //(player) add keyboard listeners - right key down
+//(player) don't go outside right
 const onKeyRightDown = (event) => {
     //console.log(event);
     let key = event.key;    
@@ -81,8 +84,8 @@ const onKeyRightDown = (event) => {
 };
 
 
-//(player) don't go outside left
-//(player) don't go outside right
+
+
 
 
 
@@ -116,12 +119,26 @@ const drawRain = (x, y) => {
 
 
 //(score) check if rain meets player => return only T/F
+var rainPlayerVicinity = Math.abs(rain_coord.y - player_coord.y);
+const rainPlayerMeetCheck = () => {
+console.log(rainPlayerVicinity);
+};
+
+const scoreCheck = () => {
+    if (rain_coord.y - player_coord.y <= rain_value.radius || player_coord.y - rain_coord.y <= rain_value.radius){
+        console.log("YES");
+        //return "YES";
+    }
+};
 //(score) if T then score + 1
 //(score) if F then do nothing
 //add score: +1 => at some point, DON'T DRAW RAIN
 
 
 //(score check) check if score is 10 (or whatever number) => return T/F
+const scoreUpdate = () => {
+    score_counter.textContent = "0";
+};
 //(score check) if T then 'stage clear' => draw new level?
 //(score check) if F then do nothing
 
@@ -143,6 +160,8 @@ const step = () => {
      drawPlayer(player_coord.x, player_coord.y);
      //drawObstacle();
      drawRain(rain_coord.x, rain_coord.y);
+     //scoreCheck();
+     rainPlayerMeetCheck();
   
      window.requestAnimationFrame(step); //when you are done wih ALL the other stuff, call yourself again: hence this line resides at the last within the function
      //this function already holds the time interval in which the screen refreshes - it figures out by the computer 상태 
