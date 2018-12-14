@@ -25,7 +25,6 @@ var player_value = {
 };
 
 var player_coord = {
-    //x: cv_coord.left_bottom_x + player_value.buffer + player_value.radius,
     x: canvas.width / 2, //start from center
     y: cv_coord.left_bottom_y - player_value.buffer - player_value.radius,
     left_x_limit: 0 + player_value.buffer + player_value.radius,
@@ -49,11 +48,11 @@ console.log(rain_coord.x, rain_coord.y, player_coord.x, player_coord.y, );
 //drawPlayer
 const drawPlayer = (x, y) => {
     ctx.beginPath();
-    ctx.arc(x, y, player_value.radius, 0, 1 * Math.PI); //line is there, but invisible
+    ctx.arc(x, y, player_value.radius, 0, 1 * Math.PI);
     ctx.closePath();
     ctx.strokeStyle = "white";
     ctx.stroke();
-    ctx.fillStyle = "gold"; //"#b2aba9" ash grey
+    ctx.fillStyle = "gold";
     ctx.fill();
 };
 
@@ -103,11 +102,12 @@ const rainYUpdate = () => {
 };
 const onTime = setInterval(rainYUpdate, 300);
 
+//const startNewRain = setTimeout(onTime, 1500);
+
 //(rain) draw rain
 const drawRain = (x, y) => {
     ctx.beginPath();
-    ctx.arc(x, y, rain_value.radius, 0, 2 * Math.PI); //line is there, but invisible
-    // ctx.closePath();
+    ctx.arc(x, y, rain_value.radius, 0, 2 * Math.PI);
     ctx.strokeStyle = "white";
     ctx.stroke();
     ctx.fillStyle = "#a9dacb"; //pale blue
