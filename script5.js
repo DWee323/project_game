@@ -30,7 +30,6 @@ var player_coord = {
     left_x_limit: 0 + player_value.buffer + player_value.radius,
     right_x_limit: canvas.width - player_value.buffer - player_value.radius,
 };
-console.log(player_coord.left_x_limit, player_coord.right_x_limit);
 
 // (parameters_rain) coordinate values
 var rain_value = {
@@ -42,7 +41,6 @@ var rain_coord = {
     x: cv_coord.left_top_x + player_coord.x,
     y: cv_coord.left_top_y + player_value.buffer + rain_value.radius,
 };
-console.log(rain_coord.x, rain_coord.y, player_coord.x, player_coord.y, );
 
 
 //drawPlayer
@@ -59,34 +57,20 @@ const drawPlayer = (x, y) => {
 //(player) add keyboard listeners - left key down
 //(player) don't go outside left
 const onKeyLeftDown = (event) => {
-    console.log(event);
     let key = event.key;
     if (key === "ArrowLeft" && player_coord.left_x_limit < player_coord.x && player_coord.x <= player_coord.right_x_limit) {
-        player_coord.x += -1 * player_value.speed;
-        console.log("pressed left");
-        console.log(player_coord.x);
+        player_coord.x += -1 * player_value.speed;        
     }
 };
 
 //(player) add keyboard listeners - right key down
 //(player) don't go outside right
-const onKeyRightDown = (event) => {
-    //console.log(event);
+const onKeyRightDown = (event) => {    
     let key = event.key;
     if (key === "ArrowRight" && player_coord.left_x_limit <= player_coord.x && player_coord.x < player_coord.right_x_limit) {
-        player_coord.x += 1 * player_value.speed;
-        console.log("pressed right");
-        console.log(player_coord.x);
+        player_coord.x += 1 * player_value.speed;        
     }
 };
-
-
-
-
-
-
-
-
 
 
 //(rain) [add time element]
@@ -94,8 +78,7 @@ const onKeyRightDown = (event) => {
 // (drop rain by time)
 const rainYUpdate = () => {
     if (0 < rain_coord.y && rain_coord.y < player_coord.y) {
-        rain_coord.y += 1 * rain_value.speed;
-        console.log(rain_coord.y);
+        rain_coord.y += 1 * rain_value.speed;      
     } else {
         rain_coord.y = 1000;
     }
@@ -153,17 +136,16 @@ const scoreUpdate = () => {
 
 
 const step = () => {
-    // console.log("inside step");
-
+    
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawPlayer(player_coord.x, player_coord.y);
-    //drawObstacle();
+   
     drawRain(rain_coord.x, rain_coord.y);
-    //scoreCheck();
+    
     rainPlayerMeetCheck();
 
     window.requestAnimationFrame(step); //when you are done wih ALL the other stuff, call yourself again: hence this line resides at the last within the function
-    //this function already holds the time interval in which the screen refreshes - it figures out by the computer 상태 
+    //this function already holds the time interval in which the screen refreshes - it figures out by the computer's capacity 
 };
 
 
@@ -171,5 +153,3 @@ document.addEventListener("keydown", onKeyLeftDown);
 document.addEventListener("keydown", onKeyRightDown); //keydown, keyup, keypress = down+up
 
 window.requestAnimationFrame(step);
-
-//console.log();
