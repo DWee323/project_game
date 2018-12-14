@@ -35,7 +35,7 @@ console.log(player_coord.left_x_limit, player_coord.right_x_limit);
 
 // (parameters_rain) coordinate values
 var rain_value = {
-    speed: 300,
+    speed: 30,
     radius: 10,
 };
 
@@ -170,22 +170,15 @@ const onKeyDown = (event) => {
     }
 };
 */
-var start = null;
-const moveRainDown = (timestamp) => {
-    if (!start) {
-        start = timestamp;
-    }
 
-    var progress = timestamp - start;
-
-    if (progress > 1000) {
-        console.log("moveRainDropDown");
-        rain_coord.y += 1 * rain_value.speed;
-        
-        start = timestamp;
+//drop rain by time
+const rainXUpdate = () => {
+    if(rain_coord.y < player_coord.y){
+    rain_coord.y += 1*rain_value.speed;
+    console.log(rain_coord.y);
     }
-    window.requestAnimationFrame(moveRainDown);
 };
+const onTime = setInterval(rainXUpdate, 500);
 
 
 const step = () => {
