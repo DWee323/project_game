@@ -20,9 +20,9 @@ var cv_coord = {
 
 // (parameters_PLAYER) coordinate values
 var player_value = {
-    buffer: 20,
-    speed: 5,
-    radius: 30,
+    buffer: 30,
+    speed: 10,
+    radius: 40,
 };
 
 var player_coord = {
@@ -37,11 +37,10 @@ console.log(player_coord.left_x_limit, player_coord.right_x_limit);
 var rain_value = {
     speed: 300,
     radius: 10,
-    
 };
 
 var rain_coord = {
-x: cv_coord.left_top_x + player_value.buffer + rain_value.radius,
+x: cv_coord.left_top_x + player_coord.x,
 y: cv_coord.left_top_y + player_value.buffer + rain_value.radius,
 };
 console.log(rain_coord.x, rain_coord.y, player_coord.x, player_coord.y,);
@@ -54,7 +53,7 @@ const drawPlayer = (x, y) => {
     ctx.closePath();
     ctx.strokeStyle = "white";
     ctx.stroke();
-    ctx.fillStyle = "#b2aba9"; //ash grey
+    ctx.fillStyle = "gold"; //"#b2aba9" ash grey
     ctx.fill();
 };
 
@@ -67,6 +66,8 @@ const drawRain = (x, y) => {
     ctx.fillStyle = "#a9dacb"; //pale blue
     ctx.fill();
 };
+
+
 
 //drawPlayer(player_coord.x, player_coord.y);
 
@@ -89,7 +90,7 @@ const movePlayerRight = () => {
 
  //(player) add keyboard listeners - left key down
  const onKeyLeftDown = (event) => {
-    //console.log(event);
+    console.log(event);
     let key = event.key;    
     if (key === "ArrowLeft" && player_coord.left_x_limit < player_coord.x && player_coord.x <= player_coord.right_x_limit ){      
         player_coord.x += -1 * player_value.speed;
@@ -169,6 +170,22 @@ const onKeyDown = (event) => {
     }
 };
 */
+var start = null;
+const moveRainDown = (timestamp) => {
+    if (!start) {
+        start = timestamp;
+    }
+
+    var progress = timestamp - start;
+
+    if (progress > 1000) {
+        console.log("moveRainDropDown");
+        rain_coord.y += 1 * rain_value.speed;
+        
+        start = timestamp;
+    }
+    window.requestAnimationFrame(moveRainDown);
+};
 
 
 const step = () => {
