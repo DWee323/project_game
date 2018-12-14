@@ -55,8 +55,9 @@ const drawPlayer = (x, y) => {
     ctx.fill();
 };
 
-drawPlayer(player_coord.x, player_coord.y);
+//drawPlayer(player_coord.x, player_coord.y);
 
+/*
 //(player) move player left
 const movePlayerLeft = () => {
     player_coord.x += -1 * player_value.speed;
@@ -69,15 +70,18 @@ const movePlayerRight = () => {
     drawPlayer(player_coord.x, player_coord.y);
     console.log(player_coord.x);
 };
+*/
 
 
-//(player) add keyboard listeners - left key down
-const onKeyLeftDown = (event) => {
+
+ //(player) add keyboard listeners - left key down
+ const onKeyLeftDown = (event) => {
     //console.log(event);
     let key = event.key;    
     if (key === "ArrowLeft"){        
-        movePlayerLeft;
+        player_coord.x += -1 * player_value.speed;
         console.log("pressed left");
+        console.log(player_coord.x);
     }    
 };
 //(player) add keyboard listeners - right key down
@@ -85,8 +89,9 @@ const onKeyRightDown = (event) => {
     //console.log(event);
     let key = event.key;    
     if (key === "ArrowRight"){       
-        movePlayerRight;
+        player_coord.x += 1 * player_value.speed;
         console.log("pressed right"); 
+        console.log(player_coord.x);
     }    
 };
 
@@ -156,17 +161,18 @@ const step = () => {
     // console.log("inside step");
  
      ctx.clearRect(0, 0, canvas.width, canvas.height);
-     drawPlayer(player_value.x, player_value.y);
+     drawPlayer(player_coord.x, player_coord.y);
      //drawObstacle();
   
      window.requestAnimationFrame(step); //when you are done wih ALL the other stuff, call yourself again: hence this line resides at the last within the function
      //this function already holds the time interval in which the screen refreshes - it figures out by the computer 상태 
- }
+ };
+
 
 document.addEventListener("keydown", onKeyLeftDown);
 document.addEventListener("keydown", onKeyRightDown);//keydown, keyup, keypress = down+up
 
 window.requestAnimationFrame(step);
 
-console.log();
+//console.log();
 

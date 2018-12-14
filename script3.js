@@ -85,7 +85,7 @@ const step = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawPlayer(player_x, player_y);
     //drawObstacle();
- 
+    drawRain(rain_x, rain_y);
     window.requestAnimationFrame(step); //when you are done wih ALL the other stuff, call yourself again: hence this line resides at the last within the function
     //this function already holds the time interval in which the screen refreshes - it figures out by the computer 상태 
 }
