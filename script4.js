@@ -57,36 +57,6 @@ const drawPlayer = (x, y) => {
     ctx.fill();
 };
 
-const drawRain = (x, y) => {
-    ctx.beginPath();
-    ctx.arc(x, y, rain_value.radius, 0, 2*Math.PI); //line is there, but invisible
-   // ctx.closePath();
-    ctx.strokeStyle = "white";
-    ctx.stroke();
-    ctx.fillStyle = "#a9dacb"; //pale blue
-    ctx.fill();
-};
-
-
-
-//drawPlayer(player_coord.x, player_coord.y);
-
-/*
-//(player) move player left
-const movePlayerLeft = () => {
-    player_coord.x += -1 * player_value.speed;
-    drawPlayer(player_coord.x, player_coord.y);
-    console.log(player_coord.x);
-};
-//(player) move player right
-const movePlayerRight = () => {
-    player_coord.x += 1 * player_value.speed;
-    drawPlayer(player_coord.x, player_coord.y);
-    console.log(player_coord.x);
-};
-*/
-
-
 
  //(player) add keyboard listeners - left key down
  const onKeyLeftDown = (event) => {
@@ -121,7 +91,26 @@ const onKeyRightDown = (event) => {
 
 //(rain) [add time element]
 //(rain) move rain down
+// (drop rain by time)
+const rainYUpdate = () => {
+    if( 0 < rain_coord.y && rain_coord.y < player_coord.y){
+    rain_coord.y += 1*rain_value.speed;
+    console.log(rain_coord.y);
+    }
+    else{rain_coord.y = 1000;}
+};
+const onTime = setInterval(rainYUpdate, 300);
+
 //(rain) draw rain
+const drawRain = (x, y) => {
+    ctx.beginPath();
+    ctx.arc(x, y, rain_value.radius, 0, 2*Math.PI); //line is there, but invisible
+   // ctx.closePath();
+    ctx.strokeStyle = "white";
+    ctx.stroke();
+    ctx.fillStyle = "#a9dacb"; //pale blue
+    ctx.fill();
+};
 // at first just have different SET X-values
 // then use math.random function
 
@@ -145,40 +134,6 @@ const onKeyRightDown = (event) => {
 //how many rain drops?
 //if there more than 3, stop drawing
 //counter
-
-
-/*
-
-const onKeyDown = (event) => {
-    //console.log(event);
-    let key = event.key;
-    if (key === "ArrowUp"){       
-       player_y += -1 * player_speed;
-        console.log("pressed up", player_y);
-       } //if 를 여러변 쌓으면 여러 키 동시에 누르는 행위 입력으로 가능
-    if (key === "ArrowDown"){        
-        player_y += 1 * player_speed;
-        console.log("pressed down", player_y);
-    }
-    if (key === "ArrowLeft"){        
-        player_x += -1 * player_speed;
-        console.log("pressed left", player_x);
-    }
-    if (key === "ArrowRight"){       
-        player_x += 1 * player_speed;
-        console.log("pressed right", player_x); 
-    }
-};
-*/
-
-//drop rain by time
-const rainXUpdate = () => {
-    if(rain_coord.y < player_coord.y){
-    rain_coord.y += 1*rain_value.speed;
-    console.log(rain_coord.y);
-    }
-};
-const onTime = setInterval(rainXUpdate, 500);
 
 
 const step = () => {
